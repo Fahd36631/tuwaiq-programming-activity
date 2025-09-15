@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المشاركة في نشاط - أكاديمية طويق</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+        }
+        .drag-item {
+            cursor: move;
+            transition: all 0.3s ease;
+        }
+        .drag-item:hover {
+            transform: scale(1.02);
+        }
+        .drop-zone {
+            min-height: 50px;
+            transition: all 0.3s ease;
+        }
+        .drop-zone.drag-over {
+            background-color: #e0f2fe;
+            border-color: #0284c7;
+        }
+        .code-line {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <img src="tuwaiq-logo.png" alt="Tuwaiq Academy" class="h-16 w-auto">
+                </div>
+                <div class="flex items-center">
+                    <img src="Holberton.png" alt="Holberton" class="h-16 w-auto">
+                </div>
+            </div>
+            <div class="text-center mt-6">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">نشاط تدريبي - البرمجة</h1>
+                <p class="text-lg text-gray-600">اختبار تفاعلي في مفاهيم البرمجة</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 space-y-8">
+        <!-- Question 1: Matching -->
+        <section class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">السؤال الأول: وصل العمودين</h2>
+            <p class="text-gray-600 mb-6">قم بربط العناصر في العمود (أ) مع العناصر المناسبة في العمود (ب)</p>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Column A -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-blue-600">العمود (أ)</h3>
+                    <div id="columnA" class="space-y-3">
+                        <div class="drag-item bg-blue-100 p-3 rounded-lg border-2 border-blue-300 cursor-move" draggable="true" data-value="create_array">
+                            create_array
+                        </div>
+                        <div class="drag-item bg-blue-100 p-3 rounded-lg border-2 border-blue-300 cursor-move" draggable="true" data-value="name">
+                            name
+                        </div>
+                        <div class="drag-item bg-blue-100 p-3 rounded-lg border-2 border-blue-300 cursor-move" draggable="true" data-value="size==0">
+                            size==0 في create_array
+                        </div>
+                        <div class="drag-item bg-blue-100 p-3 rounded-lg border-2 border-blue-300 cursor-move" draggable="true" data-value="malloc_checked">
+                            malloc_checked(100)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Column B -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-green-600">العمود (ب)</h3>
+                    <div id="columnB" class="space-y-3">
+                        <div class="drop-zone bg-green-50 p-3 rounded-lg border-2 border-dashed border-green-300" data-value="char">
+                            char
+                        </div>
+                        <div class="drop-zone bg-green-50 p-3 rounded-lg border-2 border-dashed border-green-300" data-value="تخصيص 100 بايت أو إنهاء البرنامج">
+                            تخصيص 100 بايت أو إنهاء البرنامج
+                        </div>
+                        <div class="drop-zone bg-green-50 p-3 rounded-lg border-2 border-dashed border-green-300" data-value="إنشاء مصفوفة حروف مملوءة بحرف معين">
+                            إنشاء مصفوفة حروف مملوءة بحرف معين
+                        </div>
+                        <div class="drop-zone bg-green-50 p-3 rounded-lg border-2 border-dashed border-green-300" data-value="ترجع NULL">
+                            ترجع NULL
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6">
+                <button onclick="checkMatching()" class="bg-blue-600 text-white px-6 py-3 rounded-2xl shadow-lg hover:bg-blue-700 transition-colors">
+                    تحقق من الإجابات
+                </button>
+            </div>
+            <div id="matching-feedback" class="mt-4"></div>
+        </section>
+
+        <!-- Question 2: Multiple Choice -->
+        <section class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">السؤال الثاني: اختيار من متعدد</h2>
+            <p class="text-gray-600 mb-6">اختر الإجابة الصحيحة لكل سؤال</p>
+            
+            <div class="space-y-6">
+                <!-- Question 1 -->
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-semibold mb-3">1. ماذا ترجع create_array إذا كان size==0؟</h3>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-3 space-x-reverse">
+                            <input type="radio" name="q1" value="A" class="text-blue-600">
+                            <span>أ) مصفوفة فارغة</span>
+                        </label>
+                        <label class="flex items-center space-x-3 space-x-reverse">
+                            <input type="radio" name="q1" value="B" class="text-blue-600">
+                            <span>ب) NULL</span>
+                        </label>
+                        <label class="flex items-center space-x-3 space-x-reverse">
+                            <input type="radio" name="q1" value="C" class="text-blue-600">
+                            <span>ج) 0</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-semibold mb-3">2. ماذا يحدث إذا فشل malloc داخل malloc_checked؟</h3>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-3 space-x-reverse">
+                            <input type="radio" name="q2" value="A" class="text-blue-600">
+                            <span>أ) ترجع NULL</span>
+                        </label>
+                        <label class="flex items-center space-x-3 space-x-reverse">
+                            <input type="radio" name="q2" value="B" class="text-blue-600">
+                            <span>ب) تطبع رسالة خطأ</span>
+                        </label>
+                        <label class="flex items-center space-x-3 space-x-reverse">
+                            <input type="radio" name="q2" value="C" class="text-blue-600">
+                            <span>ج) تنهي البرنامج بحالة خروج 98</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-semibold mb-3">3. أي نوع بيانات يستخدمه الحقل age في struct dog؟</h3>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-3 space-x-reverse">
+                            <input type="radio" name="q3" value="A" class="text-blue-600">
+                            <span>أ) int</span>
+                        </label>
+                        <label class="flex items-center space-x-3 space-x-reverse">
+                            <input type="radio" name="q3" value="B" class="text-blue-600">
+                            <span>ب) float</span>
+                        </label>
+                        <label class="flex items-center space-x-3 space-x-reverse">
+                            <input type="radio" name="q3" value="C" class="text-blue-600">
+                            <span>ج) double</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-semibold mb-3">4. أي عبارة صحيحة عن malloc_checked؟</h3>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-3 space-x-reverse">
+                            <input type="radio" name="q4" value="A" class="text-blue-600">
+                            <span>أ) ترجع NULL عند الفشل</span>
+                        </label>
+                        <label class="flex items-center space-x-3 space-x-reverse">
+                            <input type="radio" name="q4" value="B" class="text-blue-600">
+                            <span>ب) تنهي البرنامج عند الفشل بـ exit(98)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 space-x-reverse">
+                            <input type="radio" name="q4" value="C" class="text-blue-600">
+                            <span>ج) تطبع رسالة خطأ فقط</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-semibold mb-3">5. أي من التالي تعريف صحيح لـ struct dog؟</h3>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-3 space-x-reverse">
+                            <input type="radio" name="q5" value="A" class="text-blue-600">
+                            <span>أ) struct dog {char *name; float age; char *owner;};</span>
+                        </label>
+                        <label class="flex items-center space-x-3 space-x-reverse">
+                            <input type="radio" name="q5" value="B" class="text-blue-600">
+                            <span>ب) struct dog {int name; int age; int owner;};</span>
+                        </label>
+                        <label class="flex items-center space-x-3 space-x-reverse">
+                            <input type="radio" name="q5" value="C" class="text-blue-600">
+                            <span>ج) struct dog {char name; float age; char owner;};</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6">
+                <button onclick="checkMCQ()" class="bg-green-600 text-white px-6 py-3 rounded-2xl shadow-lg hover:bg-green-700 transition-colors">
+                    تحقق من الإجابات
+                </button>
+            </div>
+            <div id="mcq-feedback" class="mt-4"></div>
+        </section>
+
+        <!-- Question 3: Code Error Detection -->
+        <section class="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">السؤال الثالث: اكتشاف الأخطاء في كود C</h2>
+            <p class="text-gray-600 mb-6">حدد الأخطاء الثلاثة في الكود التالي</p>
+            
+            <div class="bg-gray-900 p-6 rounded-lg overflow-x-auto text-center">
+                <img src="image.png" alt="C Code with Errors" class="max-w-full h-auto mx-auto">
+            </div>
+
+            <div class="mt-6 space-y-4">
+                <h3 class="text-lg font-semibold">اكتب الكود الصحيح في المربع التالي:</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">الكود الصحيح:</label>
+                        <textarea id="correct-code" rows="15" class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-sm text-left" dir="ltr" placeholder="اكتب الكود الصحيح هنا..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6">
+                <button onclick="checkCodeErrors()" class="bg-red-600 text-white px-6 py-3 rounded-2xl shadow-lg hover:bg-red-700 transition-colors">
+                    تحقق من الإجابات
+                </button>
+            </div>
+            <div id="code-feedback" class="mt-4"></div>
+        </section>
+
+        <!-- Final Score -->
+        <section class="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl shadow-lg p-6 md:p-8 text-center">
+            <h2 class="text-2xl font-bold mb-4">النتيجة النهائية</h2>
+            <button onclick="calculateFinalScore()" class="bg-white text-blue-600 px-8 py-4 rounded-2xl shadow-lg hover:bg-gray-100 transition-colors text-lg font-semibold">
+                احسب الدرجة النهائية
+            </button>
+            <div id="final-score" class="mt-6 text-xl"></div>
+        </section>
+    </main>
+
+    <script>
+        // Correct answers
+        const correctAnswers = {
+            matching: {
+                "create_array": "إنشاء مصفوفة حروف مملوءة بحرف معين",
+                "name": "char",
+                "size==0": "ترجع NULL",
+                "malloc_checked": "تخصيص 100 بايت أو إنهاء البرنامج"
+            },
+            mcq: {
+                "q1": "B",
+                "q2": "C", 
+                "q3": "B",
+                "q4": "B",
+                "q5": "A"
+            },
+            codeErrors: ["error1", "error2", "error3"]
+        };
+
+        let matchingPairs = {};
+        let mcqAnswers = {};
+        let codeErrorAnswers = {};
+
+        // Drag and drop functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const dragItems = document.querySelectorAll('.drag-item');
+            const dropZones = document.querySelectorAll('.drop-zone');
+
+            dragItems.forEach(item => {
+                item.addEventListener('dragstart', function(e) {
+                    e.dataTransfer.setData('text/plain', this.dataset.value);
+                    this.style.opacity = '0.5';
+                });
+
+                item.addEventListener('dragend', function(e) {
+                    this.style.opacity = '1';
+                });
+            });
+
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.classList.add('drag-over');
+                });
+
+                zone.addEventListener('dragleave', function(e) {
+                    this.classList.remove('drag-over');
+                });
+
+                zone.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('drag-over');
+                    
+                    const draggedValue = e.dataTransfer.getData('text/plain');
+                    const dropValue = this.dataset.value;
+                    
+                    // Store the pairing
+                    matchingPairs[draggedValue] = dropValue;
+                    
+                    // Visual feedback
+                    this.style.backgroundColor = '#dbeafe';
+                    this.style.borderColor = '#3b82f6';
+                    this.style.borderStyle = 'solid';
+                    
+                    // Add text to show what was dropped
+                    this.innerHTML = `${dropValue} ← ${draggedValue}`;
+                });
+            });
+        });
+
+        function checkMatching() {
+            const feedback = document.getElementById('matching-feedback');
+            let correctCount = 0;
+            let totalCount = Object.keys(correctAnswers.matching).length;
+            let feedbackHTML = '<div class="mt-4 space-y-2">';
+
+            for (const [key, correctValue] of Object.entries(correctAnswers.matching)) {
+                const userAnswer = matchingPairs[key];
+                const isCorrect = userAnswer === correctValue;
+                
+                if (isCorrect) correctCount++;
+                
+                feedbackHTML += `
+                    <div class="p-3 rounded-lg ${isCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                        ${key}: ${isCorrect ? 'مقبوووله يامعلم ✅' : 'مرفوووضه يامعلم ❌'}
+                    </div>
+                `;
+            }
+
+            feedbackHTML += '</div>';
+            feedback.innerHTML = feedbackHTML;
+        }
+
+        function checkMCQ() {
+            const feedback = document.getElementById('mcq-feedback');
+            let correctCount = 0;
+            let totalCount = Object.keys(correctAnswers.mcq).length;
+            let feedbackHTML = '<div class="mt-4 space-y-2">';
+
+            for (const [question, correctAnswer] of Object.entries(correctAnswers.mcq)) {
+                const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
+                const userAnswer = selectedAnswer ? selectedAnswer.value : null;
+                const isCorrect = userAnswer === correctAnswer;
+                
+                if (isCorrect) correctCount++;
+                
+                feedbackHTML += `
+                    <div class="p-3 rounded-lg ${isCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                        السؤال ${question.replace('q', '')}: ${isCorrect ? 'مقبوووله يامعلم ✅' : 'مرفوووضه يامعلم ❌'}
+                    </div>
+                `;
+            }
+
+            feedbackHTML += '</div>';
+            feedback.innerHTML = feedbackHTML;
+        }
+
+        function checkCodeErrors() {
+            const feedback = document.getElementById('code-feedback');
+            let feedbackHTML = '<div class="mt-4 space-y-2">';
+
+            // الحصول على الكود المكتوب
+            const userCode = document.getElementById('correct-code').value.toLowerCase().trim();
+
+            // الكود الصحيح المتوقع
+            const correctCode = `#include <stdio.h>
+
+struct dog
+{
+    char *name;
+    float age;
+    char *owner;
+};
+
+int main(void)
+{
+    struct dog mydog = {"Poppy", 3.5, "Alice"};
+
+    printf("Name: %s\n", mydog.name);
+    printf("Age: %.1f\n", mydog.age);
+    printf("Owner: %s\n", mydog.owner);
+
+    return 0;
+}`.toLowerCase().trim();
+
+            // التحقق من العناصر الأساسية
+            let correctCount = 0;
+            let totalChecks = 3;
+
+            // التحقق من char *name
+            const hasCharName = userCode.includes('char *name') || userCode.includes('char* name');
+            if (hasCharName) correctCount++;
+
+            // التحقق من الفاصلة المنقوطة
+            const hasSemicolon = userCode.includes('char *owner;') || userCode.includes('char* owner;');
+            if (hasSemicolon) correctCount++;
+
+            // التحقق من mydog.name
+            const hasMydogName = userCode.includes('mydog.name');
+            if (hasMydogName) correctCount++;
+
+            // النتيجة النهائية
+            const isFullyCorrect = correctCount === totalChecks;
+            feedbackHTML += `
+                <div class="p-4 rounded-lg ${isFullyCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'} font-bold text-center">
+                    النتيجة: ${correctCount}/${totalChecks} - ${isFullyCorrect ? 'مقبوووله يامعلم ✅' : 'مرفوووضه يامعلم ❌'}
+                </div>
+            `;
+
+            // تفاصيل التحقق
+            feedbackHTML += `
+                <div class="space-y-2">
+                    <div class="p-2 rounded ${hasCharName ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                        ${hasCharName ? 'مقبوووله يامعلم ✅' : 'مرفوووضه يامعلم ❌'}
+                    </div>
+                    <div class="p-2 rounded ${hasSemicolon ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                        ${hasSemicolon ? 'مقبوووله يامعلم ✅' : 'مرفوووضه يامعلم ❌'}
+                    </div>
+                    <div class="p-2 rounded ${hasMydogName ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                        ${hasMydogName ? 'مقبوووله يامعلم ✅' : 'مرفوووضه يامعلم ❌'}
+                    </div>
+                </div>
+            `;
+
+            feedbackHTML += '</div>';
+            feedback.innerHTML = feedbackHTML;
+        }
+
+        function calculateFinalScore() {
+            const finalScoreDiv = document.getElementById('final-score');
+            
+            // Calculate matching score
+            let matchingCorrect = 0;
+            for (const [key, correctValue] of Object.entries(correctAnswers.matching)) {
+                if (matchingPairs[key] === correctValue) matchingCorrect++;
+            }
+            
+            // Calculate MCQ score
+            let mcqCorrect = 0;
+            for (const [question, correctAnswer] of Object.entries(correctAnswers.mcq)) {
+                const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
+                if (selectedAnswer && selectedAnswer.value === correctAnswer) mcqCorrect++;
+            }
+            
+            // Calculate code errors score
+            const userCode = document.getElementById('correct-code').value.toLowerCase().trim();
+            
+            let codeCorrectCount = 0;
+            // Check each correction
+            if (userCode.includes('char *name') || userCode.includes('char* name')) codeCorrectCount++;
+            if (userCode.includes('char *owner;') || userCode.includes('char* owner;')) codeCorrectCount++;
+            if (userCode.includes('mydog.name')) codeCorrectCount++;
+            
+            const codeCorrect = codeCorrectCount === 3 ? 1 : 0;
+            
+            const totalCorrect = matchingCorrect + mcqCorrect + codeCorrect;
+            const totalQuestions = 3; // 3 sections
+            
+            let message = '';
+            if (totalCorrect === totalQuestions) {
+                message = '🎉 ممتاز! لقد حصلت على الدرجة الكاملة! مقبوووله يامعلم ✅';
+            } else if (totalCorrect >= 2) {
+                message = `جيد جداً! ${totalCorrect}/${totalQuestions} مقبوووله يامعلم ✅`;
+            } else {
+                message = `تحتاج للمراجعة! ${totalCorrect}/${totalQuestions} مقبوووله يامعلم ✅`;
+            }
+            
+            finalScoreDiv.innerHTML = `
+                <div class="text-2xl font-bold mb-2">${totalCorrect}/${totalQuestions}</div>
+                <div class="text-lg">${message}</div>
+                <div class="mt-4 text-sm">
+                    <div>الوصل: ${matchingCorrect}/${Object.keys(correctAnswers.matching).length}</div>
+                    <div>الاختيار المتعدد: ${mcqCorrect}/${Object.keys(correctAnswers.mcq).length}</div>
+                    <div>اكتشاف الأخطاء: ${codeCorrect}/1</div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
