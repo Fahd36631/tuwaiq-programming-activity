@@ -120,12 +120,12 @@
                     </div>
                     <div class="space-y-2">
                         <label class="flex items-center space-x-3">
-                            <input type="radio" name="q2_1" value="Yes" class="text-blue-600">
-                            <span>Yes</span>
+                            <input type="radio" name="q2_1" value="True" class="text-blue-600">
+                            <span>True</span>
                         </label>
                         <label class="flex items-center space-x-3">
-                            <input type="radio" name="q2_1" value="No" class="text-blue-600">
-                            <span>No</span>
+                            <input type="radio" name="q2_1" value="False" class="text-blue-600">
+                            <span>False</span>
                         </label>
                     </div>
                 </div>
@@ -143,12 +143,12 @@
                     </div>
                     <div class="space-y-2">
                         <label class="flex items-center space-x-3">
-                            <input type="radio" name="q2_2" value="Yes" class="text-blue-600">
-                            <span>Yes</span>
+                            <input type="radio" name="q2_2" value="True" class="text-blue-600">
+                            <span>True</span>
                         </label>
                         <label class="flex items-center space-x-3">
-                            <input type="radio" name="q2_2" value="No" class="text-blue-600">
-                            <span>No</span>
+                            <input type="radio" name="q2_2" value="False" class="text-blue-600">
+                            <span>False</span>
                         </label>
                     </div>
                 </div>
@@ -257,7 +257,7 @@
             <p class="text-gray-600 mb-6">Find the errors in the following C code</p>
             
             <div class="bg-gray-900 p-6 rounded-lg overflow-x-auto text-center">
-                <img src="image.png" alt="C Code with Errors" class="max-w-full h-auto mx-auto">
+                <img src="imgg.png" alt="C Code with Errors" class="max-w-full h-auto mx-auto">
             </div>
 
             <div class="mt-6 space-y-4">
@@ -298,8 +298,8 @@
                 "malloc_checked": "allocate 100 bytes or exit program"
             },
             memory: {
-                "q2_1": "No",    // char str[] = "Best School"; free(str); - No (can't free stack memory)
-                "q2_2": "Yes"    // strdup with free - Yes (correct)
+                "q2_1": "False",    // char str[] = "Best School"; free(str); - False (can't free stack memory)
+                "q2_2": "True"      // strdup with free - True (correct)
             },
             mcq: {
                 "q3_1": "B",     // malloc stored in heap
